@@ -1,0 +1,36 @@
+﻿@page "/Login"
+@inject LoginService LoginService
+@inject NavigationManager Navigation
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+            <EditForm Model="_model" class="card mt-3" OnSubmit="OnLoginAsync">
+                <DataAnnotationsValidator/>
+                <div class="card-header h3 milad-block">
+                    Login form
+                </div>
+                <div class="card-body">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="username" @bind="_model.Email">
+                        <label for="floatingInput">Email</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" @bind="_model.Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="mt-@(context.Validate() is false ? "3" : "0")">
+                        <ValidationSummary/>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-success" type="submit" disabled="@(context.Validate() is false)">
+                            Login
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer text-danger text-center" hidden="@(_loginFailed is false)">
+                    Login failed!
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>

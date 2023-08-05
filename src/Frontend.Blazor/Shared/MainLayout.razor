@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+
+@inject LoginService LoginService
+
+<PageTitle>Frontend.Blazor</PageTitle>
+
+<AuthorizeView Context="auth">
+    <Authorized>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu/>
+            </div>
+
+            <main>
+                <div class="top-row px-4">
+                    <div class="m-2">Welcome @auth.User.Identity?.Name</div>
+                    <div>
+                        <a @onclick="OnLogoutAsync" href="#">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+
+                <article class="content px-4">
+                    @Body
+                </article>
+            </main>
+        </div>
+    </Authorized>
+    <NotAuthorized Context="notAuth">
+        <Login/>
+    </NotAuthorized>
+</AuthorizeView>
+@code
+{
+    private async Task OnLogoutAsync()
+    {
+        await LoginService.LogoutAsync();
+    }
+}

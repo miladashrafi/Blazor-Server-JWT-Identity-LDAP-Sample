@@ -1,0 +1,26 @@
+﻿@page "/claims"
+@using System.Security.Claims
+@inject LoginService LoginService
+@attribute [Authorize]
+@if (_claims == null)
+{
+    <div>Loading ...</div>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var claim in _claims)
+        {
+            <li class="list-group-item">@claim.Type: @claim.Value</li>
+        }
+    </ul>
+}
+
+@code{
+    private List<Claim> _claims = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _claims = await LoginService.GetLoginInfoAsync();
+    }
+}
